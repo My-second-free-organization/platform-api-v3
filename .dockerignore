@@ -1,0 +1,14 @@
+**/__pycache__
+**/.venv
+**/.git
+**/node_modules
+**/dist
+**/build
+**/target
+**/.idea
+.env
+*.log
+README.md
+LICENSE
+docs/
+tests/

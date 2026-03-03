@@ -1,0 +1,17 @@
+name: Security Scan
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: '0 6 * * 1'
+jobs:
+  trivy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: fs
+          ignore-unfixed: true
+          format: sarif
+          output: trivy-results.sarif
