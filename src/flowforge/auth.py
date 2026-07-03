@@ -19,7 +19,18 @@ class OAuth2Auth(AuthProvider):
 
     def get_token(self) -> str:
         if not self._token:
-            r = httpx.post(self._token_url, data={"grant_type": "client_credentials", "client_id": self._client_id, "client_secret": self._client_secret})
-            r.raise_for_status()
-            self._token = r.json()["access_token"]
+            try:
+                r = httpx.post(
+                    self._token_url,
+                    data={
+                        "grant_type": "client_credentials",
+                        "client_id": self._client_id,
+                        "client_secret": self._client_secret,
+                    },
+                )
+                r.raise_for_status()
+                self._token = r.json()["access_token"]
+            except Exception as e:
+                raise ValueError("Failed to obtain OAuth2 token") from e
+
         return self._token
